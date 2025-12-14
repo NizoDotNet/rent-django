@@ -133,7 +133,7 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": False,
     "UPDATE_LAST_LOGIN": False,
 
-    "ALGORITHM": "HMAC",
+    "ALGORITHM": "HS256",
     "SIGNING_KEY": os.getenv('SIGNING_KEY'),
     "VERIFYING_KEY": "",
     "AUDIENCE": None,
