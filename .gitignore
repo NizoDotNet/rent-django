@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.log
+*.pot
+*.swp
+*~$
+*.bak
+
+.env/
+.venv/
+env/
+venv/
+ENV/
+bin/
+lib/
+include/
+share/
+
+db.sqlite3
+*.sqlite3-journal
+
+media/
+static/ # if you don't want to commit collected static files
+
+local_settings.py # or any file containing secret keys or db credentials
+.env # often used for storing secrets
+
+.vscode/ # for VS Code users
+.ruff_cache/
+
+Thumbs.db
