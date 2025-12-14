@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
+    'rest_framework',
+    'drf_yasg',
+
 ]
 
 MIDDLEWARE = [
@@ -99,7 +101,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    },
+    'USE_SESSION_AUTH': False,
+}
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
