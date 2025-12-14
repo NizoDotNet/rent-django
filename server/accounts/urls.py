@@ -1,8 +1,8 @@
 from django.urls import path
-from .views.RegisterView import RegisterView
-from .views.LoginView import LoginView
-from .views.RefreshView import RefreshView 
-from .views.GetRoleView import GetRoleView
+from .views import RegisterView
+from .views import LoginView
+from .views import RefreshView 
+from .views import GetRoleView
 
 urlpatterns = [
     path('api/auth/login/', LoginView.as_view(), name='token_obtain_pair'),
