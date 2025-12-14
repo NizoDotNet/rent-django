@@ -1,8 +1,8 @@
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
-from rest_framework_simplejwt.views import TokenRefreshView
 from .views.RegisterView import RegisterView
 from .views.LoginView import LoginView
+from .views.RefreshView import RefreshView 
 
 
 urlpatterns = [
@@ -11,6 +11,6 @@ urlpatterns = [
     path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
     path('landlord', include('landlord.urls')),
     path('api/auth/login/', LoginView.as_view(), name='token_obtain_pair'),
-    path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/auth/refresh/', RefreshView.as_view(), name='token_refresh'),
     path('api/auth/register', RegisterView.as_view(), name='register_user')
 ]
