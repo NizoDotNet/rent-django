@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'landlord',
     'drf_spectacular',
     'drf_spectacular_sidecar'
 ]
