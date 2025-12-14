@@ -1,4 +1,3 @@
-# Python
 __pycache__/
 *.pyc
 *.log
@@ -21,12 +20,12 @@ db.sqlite3
 *.sqlite3-journal
 
 media/
-static/ # if you don't want to commit collected static files
+static/ 
 
-local_settings.py # or any file containing secret keys or db credentials
-.env # often used for storing secrets
+local_settings.py
+.env 
 
-.vscode/ # for VS Code users
+.vscode/ 
 .ruff_cache/
 
 Thumbs.db
