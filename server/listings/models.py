@@ -8,6 +8,7 @@ class Listing(models.Model):
     city = models.CharField(max_length=15)
     price_per_night = models.DecimalField(max_digits=5, decimal_places=2)
     max_guests = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
