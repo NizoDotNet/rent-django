@@ -1,9 +1,8 @@
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from .serializers.ListListingSerializer import ListListingSerializer
 from .serializers.CreateListingSerializer import CreateListingSerializer
+from .serializers.ListingSerializer import ListingSerializer
 from rent.permissions import IsLandlordPermission 
-from rest_framework import permissions
-
 from .models import Listing
 
 
@@ -14,7 +13,16 @@ class CreateListListingsView(ListCreateAPIView):
         if self.request.method == 'GET':
             return ListListingSerializer
         return CreateListingSerializer
+    
     def get_permissions(self):
         if self.request.method == 'POST':
             return [IsLandlordPermission()]
         return []
+    
+class RetrieveUpdateDestroyListingView(RetrieveUpdateDestroyAPIView):
+    serializer_class = ListingSerializer
+    lookup_field = 'id'
+    queryset = Listing.objects.select_related('owner')
+
+
+    
