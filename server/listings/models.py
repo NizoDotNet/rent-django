@@ -6,7 +6,7 @@ class Listing(models.Model):
     title = models.CharField(max_length=20)
     description = models.CharField(max_length=200)
     city = models.CharField(max_length=15)
-    price_per_night = models.DecimalField()
+    price_per_night = models.DecimalField(max_digits=5, decimal_places=2)
     max_guests = models.IntegerField()
     owner = models.ForeignKey(
         User,

@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 import rest_framework.status as status
-from ...rent.permissions import IsLandlordPermission
+from rent.permissions import IsLandlordPermission
 
 class GetRoleView(APIView):
     permission_classes = [IsLandlordPermission]

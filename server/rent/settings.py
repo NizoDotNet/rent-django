@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-    'landlord',
+    'listings',
     'drf_spectacular',
     'drf_spectacular_sidecar',
 ]
