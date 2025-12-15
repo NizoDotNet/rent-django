@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.generics import ListCreateAPIView
 from .serializers.ListListingSerializer import ListListingSerializer
 from .serializers.CreateListingSerializer import CreateListingSerializer
 from rent.permissions import IsLandlordPermission 
@@ -6,12 +6,10 @@ from rent.permissions import IsLandlordPermission
 from .models import Listing
 
 
-class ListListingsView(ListAPIView):
-    serializer_class = ListListingSerializer
-    queryset = Listing.objects.all()
+class CreateListListingsView(ListCreateAPIView):
+    queryset = Listing.objects.all().order_by('-created_at')
 
-    
-class CreateListingView(CreateAPIView):
-    # permission_classes = [IsLandlordPermission]
-    queryset = Listing.objects.all()
-    serializer_class = CreateListingSerializer
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return ListListingSerializer
+        return CreateListingSerializer
