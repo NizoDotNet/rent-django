@@ -1,3 +1,5 @@
-from django.shortcuts import render
+from rest_framework.generics import ListAPIView
+from .serializers.ListListingSerializer import ListListingSerializer
 
-# Create your views here.
+class ListListingsView(ListAPIView):
+    serializer_class = ListListingSerializer
