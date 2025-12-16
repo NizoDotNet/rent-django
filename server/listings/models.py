@@ -7,7 +7,7 @@ class Listing(models.Model):
     description = models.CharField(max_length=200,  validators=[MinLengthValidator(2)])
     city = models.CharField(max_length=15, validators=[MinLengthValidator(2)])
     price_per_night = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(0)])
-    max_guests = models.IntegerField()
+    max_guests = models.PositiveSmallIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(
         User,
