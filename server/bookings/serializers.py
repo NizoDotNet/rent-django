@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import BookingRequest
+from .models import BookingRequest
 
 class BookingRequestSerializer(serializers.ModelSerializer):
     class Meta:
@@ -25,7 +25,6 @@ class BookingRequestSerializer(serializers.ModelSerializer):
         return attrs
     
     def create(self, validated_data):
-        user = self.context['request'].user
         check_in = validated_data['check_in']
         check_out = validated_data['check_out']
         listing = validated_data['listing']
@@ -41,3 +40,11 @@ class BookingRequestSerializer(serializers.ModelSerializer):
 
 
         return BookingRequest.objects.create(**validated_data)
+
+
+class GetBookingRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BookingRequest
+        fields = ('id', 'customer', 'listing', 'check_in', 'check_out', 'guests')
+
+    
