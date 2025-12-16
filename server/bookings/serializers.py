@@ -25,9 +25,16 @@ class BookingRequestSerializer(serializers.ModelSerializer):
         return attrs
     
     def create(self, validated_data):
+        user = self.context['request'].user
         check_in = validated_data['check_in']
         check_out = validated_data['check_out']
         listing = validated_data['listing']
+
+        if listing.owner == user:
+            raise serializers.ValidationError(
+                "You cannot book your own listing."
+            )
+
         if BookingRequest.objects.filter(
             listing=listing,
             check_in__lt=check_out,
