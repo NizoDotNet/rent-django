@@ -55,3 +55,15 @@ class GetBookingRequestSerializer(serializers.ModelSerializer):
         fields = ('id', 'customer', 'listing', 'check_in', 'check_out', 'guests')
 
     
+# class UpdateStatusBookingSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = BookingRequest
+#         fields = ['status']
+    
+#     def validate(self, attrs):
+#         status = attrs.get('status')
+#         if status not in ('approved', 'rejected'):
+#             raise serializers.ValidationError(
+#                 "Booking request can only have approved and rejected statuses"
+#             )
+#         return attrs
