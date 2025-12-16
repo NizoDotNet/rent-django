@@ -1,11 +1,13 @@
-from rest_framework.generics import ListCreateAPIView, UpdateAPIView
+from rest_framework.generics import ListCreateAPIView
 from rest_framework.views import APIView
-from .serializers import BookingRequestSerializer, GetBookingRequestSerializer
+from .serializers import BookingRequestSerializer, GetBookingRequestSerializer, ResultSerializer
 from rest_framework.permissions import IsAuthenticated
 from .models import BookingRequest
 from rent.permissions import IsLandlordPermission
 from rest_framework.response import Response
-from rest_framework.status import HTTP_404_NOT_FOUND 
+from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_201_CREATED
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse
+from drf_spectacular.types import OpenApiTypes
 
 class BookingView(ListCreateAPIView):
     permission_classes = [IsAuthenticated]
@@ -38,15 +40,51 @@ class BookingChangeStatusView(APIView):
     def __init__(self, status, **kwargs):
         self.status = status
         super().__init__(**kwargs)
-
-    def get(self, request):
-        id = request.GET.get('id')
+    @extend_schema(
+        description="Approve a booking by ID (only the listing owner can approve)",
+        parameters=[
+            OpenApiParameter(
+                name='id',
+                type=OpenApiTypes.INT,
+                location=OpenApiParameter.PATH,
+                required=True,
+                description="ID of the booking to approve"
+            ),
+        ],
+        responses={
+            201: OpenApiResponse(
+                response=ResultSerializer,
+                description="Booking updated successfully"
+            ),
+            404: OpenApiResponse(
+                response=ResultSerializer,
+                description="Booking not found or user is not the owner"
+            ),
+            500: OpenApiResponse(
+                response=ResultSerializer,
+                description="Internal server error"
+            ),
+        }
+    )
+    def post(self, request, id):
         try:
-            booking = BookingRequest.objects.filter(owner=request.user).get(id)
+            booking = BookingRequest.objects.get(id=id)
+            if booking.listing.owner != request.user:
+                return Response(status=HTTP_404_NOT_FOUND, data={ 'result': 'No such booking with this id'} )
+
             booking.status = self.status
             booking.save()
         except BookingRequest.DoesNotExist:
-            return Response(status=HTTP_404_NOT_FOUND, data={ 'resutlt': 'No such booking with this id'} )
+            return Response(status=HTTP_404_NOT_FOUND, data={ 'result': 'No such booking with this id'} )
         except Exception as ex:
             raise ex 
+        return Response(status=HTTP_201_CREATED, data={'result': 'Updated succesfully'})
+        
 
+class BookingApproveView(BookingChangeStatusView):
+    def __init__(self, **kwargs):
+        super().__init__('approved', **kwargs)
+
+class BookingRejectView(BookingChangeStatusView):
+    def __init__(self, **kwargs):
+        super().__init__('rejected', **kwargs)
