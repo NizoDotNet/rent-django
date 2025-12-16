@@ -1,4 +1,4 @@
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveAPIView
 from rest_framework.views import APIView
 from .serializers import BookingRequestSerializer, GetBookingRequestSerializer, ResultSerializer
 from rest_framework.permissions import IsAuthenticated
@@ -32,6 +32,22 @@ class BookingView(ListCreateAPIView):
     
     def perform_create(self, serializer):
         serializer.save(customer=self.request.user)
+    
+
+class RetrieveBookingRequestView(RetrieveAPIView):
+    lookup_field = 'id'
+    serializer_class = GetBookingRequestSerializer
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        user = self.request.user
+
+        if user.role == 'customer':
+            return BookingRequest.objects.filter(customer=user).select_related('listing')
+
+        if user.role == 'landlord':
+            return BookingRequest.objects.filter(listing__owner=user).select_related('listing')
+
+        return BookingRequest.objects.none()
     
 
 class BookingChangeStatusView(APIView):
@@ -88,3 +104,4 @@ class BookingApproveView(BookingChangeStatusView):
 class BookingRejectView(BookingChangeStatusView):
     def __init__(self, **kwargs):
         super().__init__('rejected', **kwargs)
+

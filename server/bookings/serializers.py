@@ -52,7 +52,7 @@ class BookingRequestSerializer(serializers.ModelSerializer):
 class GetBookingRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookingRequest
-        fields = ('id', 'customer', 'listing', 'check_in', 'check_out', 'guests')
+        fields = ('id', 'customer', 'listing', 'check_in', 'check_out', 'guests', 'status')
 
     
 class ResultSerializer(serializers.Serializer):
