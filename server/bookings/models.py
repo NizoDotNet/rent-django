@@ -7,11 +7,11 @@ class BookingRequest(models.Model):
     STATUS_CHOICE = (
         ('pending', 'Pending'),
         ('approved', 'Approved'),
-        ('rejected', 'Rejected')
+        ('rejected', 'Rejected'),
         ('cancelled', 'Cancelled')
     )
 
-    id = models.AutoField()
+    id = models.AutoField(primary_key=True)
     check_in = models.DateField(auto_now=False, auto_now_add=False)
     check_out = models.DateField(auto_now=False, auto_now_add=False)
     guests = models.PositiveSmallIntegerField()
@@ -48,5 +48,6 @@ class BookingRequest(models.Model):
     def save(self, *args, **kwargs):
         self.nights = (self.check_out - self.check_in).days
         self.total_price = self.nights * self.listing.price_per_night
+        self.full_clean()
         super().save(*args, **kwargs)
 

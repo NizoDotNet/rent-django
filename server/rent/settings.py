@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'listings',
+    'bookings',
     'drf_spectacular',
     'drf_spectacular_sidecar',
 ]
