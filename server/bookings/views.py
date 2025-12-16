@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from rest_framework.views import APIView
+from rent.permissions import IsCustomerPermission
+from .models import BookingRequest
 
-# Create your views here.
+class IsBookingAvaibleView(APIView):
+    permission_classes = [IsCustomerPermission]
+    def post(self, request, format=None):
+        ...

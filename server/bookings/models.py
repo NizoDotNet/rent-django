@@ -29,13 +29,13 @@ class BookingRequest(models.Model):
     listing = models.ForeignKey(
         Listing,
         on_delete=models.CASCADE,
-        related_name='listing'
+        related_name='booking_request'
     )
 
     customer = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='user'
+        related_name='booking_request'
     )
 
     def clean(self):
