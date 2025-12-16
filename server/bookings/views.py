@@ -1,8 +1,11 @@
-from rest_framework.views import APIView
+from rest_framework.generics import CreateAPIView
 from rent.permissions import IsCustomerPermission
 from .models import BookingRequest
+from .serializers.BookingRequestSerilalizer import BookingRequestSerializer
 
-class IsBookingAvaibleView(APIView):
+class BookingView(CreateAPIView):
     permission_classes = [IsCustomerPermission]
-    def post(self, request, format=None):
-        ...
+    serializer_class = BookingRequestSerializer
+    def perform_create(self, serializer):
+        serializer.save(customer=self.request.user)
+

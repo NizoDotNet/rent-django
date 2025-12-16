@@ -29,16 +29,15 @@ class BookingRequestSerializer(serializers.ModelSerializer):
         check_in = validated_data['check_in']
         check_out = validated_data['check_out']
         listing = validated_data['listing']
-
         if BookingRequest.objects.filter(
             listing=listing,
             check_in__lt=check_out,
             check_out__gt=check_in,
-            status__in='approved'
+            status__in=['pending', 'approved'],
         ).exists():
             raise serializers.ValidationError(
                 "Listing is already booked for these dates"
             )
 
 
-        return BookingRequest.objects.create(customer=user, **validated_data)
+        return BookingRequest.objects.create(**validated_data)
