@@ -12,7 +12,7 @@ class BookingRequestSerializer(serializers.ModelSerializer):
         listing = attrs.get('listing')
         guests = attrs.get('guests')
 
-        if not guests >= 1:
+        if guests < 1:
              raise serializers.ValidationError({
                 "guests": "Guests count must be greater or equal one"
             })
