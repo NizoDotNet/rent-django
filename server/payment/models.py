@@ -12,7 +12,8 @@ class Checkout(models.Model):
     booking = models.ForeignKey(
         BookingRequest,
         on_delete=models.SET_NULL,
-        related_name='checkout'
+        related_name='checkout',
+        null=True
     )
     amount = models.DecimalField(max_digits=6, decimal_places=2, editable=False)
     status = status = models.CharField(

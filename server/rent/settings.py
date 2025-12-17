@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'accounts',
     'listings',
     'bookings',
+    'payment',
     'drf_spectacular',
     'drf_spectacular_sidecar',
 ]
