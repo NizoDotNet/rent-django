@@ -9,7 +9,14 @@ class CheckoutBookingView(APIView):
     permission_classes = [IsCustomerPermission]
     def post(self, request, booking_id):
             
-        booking = get_object_or_404(BookingRequest, id=booking_id)
+        try:
+            booking = BookingRequest.objects.filter(
+                customer=request.user,
+                status='approved'
+            ).get(id=booking_id)
+
+        except BookingRequest.DoesNotExist:
+            return Response(status=404)
         
         Checkout.objects.create(
             booking=booking,
