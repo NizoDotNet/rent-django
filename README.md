@@ -11,7 +11,7 @@ A Django-based rental management API using PostgreSQL.
 1. Run the app:
 
 ```bash
-docker compose up --build
+docker compose up --build -d
 ```
 
 > Migrations and static files will run automatically.

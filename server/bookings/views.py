@@ -3,14 +3,13 @@ from rest_framework.views import APIView
 from .serializers import BookingRequestSerializer, GetBookingRequestSerializer, ResultSerializer
 from rest_framework.permissions import IsAuthenticated
 from .models import BookingRequest
-from rent.permissions import IsLandlordPermission
+from rent.permissions import IsLandlordPermission, IsCustomerPermission
 from rest_framework.response import Response
 from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_201_CREATED
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse
 from drf_spectacular.types import OpenApiTypes
 
 class BookingView(ListCreateAPIView):
-    permission_classes = [IsAuthenticated]
     queryset = BookingRequest.objects.all()
 
     def get_queryset(self):
@@ -28,6 +27,10 @@ class BookingView(ListCreateAPIView):
         if self.request.method == 'GET':
             return GetBookingRequestSerializer
         return BookingRequestSerializer
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            return [IsCustomerPermission()]
+        return []
     
     
     def perform_create(self, serializer):
