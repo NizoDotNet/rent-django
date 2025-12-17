@@ -28,6 +28,12 @@ http://localhost:8000
 http://localhost:8000/api/schema/
 ```
 
+4. Swagger UI documentation:
+
+```
+http://localhost:8000/api/schema/swagger-ui/
+```
+
 ---
 
 ### 2. Running Django without Docker
