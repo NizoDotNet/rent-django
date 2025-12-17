@@ -40,3 +40,4 @@ class CreateListingSerializer(serializers.ModelSerializer):
             raise ValidationError({
                 'guests': 'Guests cannot be less than zero' 
             })
+        return attrs
