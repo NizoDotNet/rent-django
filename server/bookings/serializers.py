@@ -46,7 +46,8 @@ class BookingRequestSerializer(serializers.ModelSerializer):
             listing=listing,
             check_in__lt=check_out,
             check_out__gt=check_in,
-            status__in=['approved'],
+            customer=user,
+            status__in=['pending', 'approved'],
         ).exists():
             raise serializers.ValidationError(
                 "Listing is already booked for these dates"

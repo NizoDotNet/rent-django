@@ -27,6 +27,7 @@ class BookingView(ListCreateAPIView):
         if self.request.method == 'GET':
             return GetBookingRequestSerializer
         return BookingRequestSerializer
+    
     def get_permissions(self):
         if self.request.method == 'POST':
             return [IsCustomerPermission()]
