@@ -40,7 +40,7 @@ class PayView(APIView):
         parameters=[
             OpenApiParameter(
                 name="id",
-                description="Checkout (BookingRequest) ID",
+                description="Checkout ID",
                 required=True,
                 type=int,
                 location=OpenApiParameter.PATH,
@@ -55,12 +55,15 @@ class PayView(APIView):
         ],
         responses={
             201: OpenApiResponse(
+                response=None,
                 description="Payment processed successfully"
             ),
             400: OpenApiResponse(
+                response=None,
                 description='Something went wrong while payment'
             ),
             404: OpenApiResponse(
+                response=None,
                 description="Checkout not found or not approved"
             ),
         },
@@ -77,19 +80,20 @@ class PayView(APIView):
             return Response(status=404)
         
         success = request.query_params.get('success')
-        if success == True:
+        print(success)
+        if success:
             Payment.objects.create(
-                checkout=id,
+                checkout=checkout,
                 provider='Fake',
                 status='success'
             )
             checkout.status = 'paid'
             checkout.save()
-            return Response(status=200)
+            return Response(status=201)
 
         else:
             Payment.objects.create(
-                checkout=id,
+                checkout=checkout,
                 provider='Fake',
                 status='failed'
             )
