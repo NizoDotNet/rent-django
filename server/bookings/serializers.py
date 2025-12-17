@@ -12,6 +12,12 @@ class BookingRequestSerializer(serializers.ModelSerializer):
         listing = attrs.get('listing')
         guests = attrs.get('guests')
 
+        if not guests >= 1:
+             raise serializers.ValidationError({
+                "guests": "Guests count must be greater or equal one"
+            })
+
+
         if check_in and check_out and check_out <= check_in:
             raise serializers.ValidationError({
                 "check_out": "Check-out must be after check-in"
@@ -21,6 +27,7 @@ class BookingRequestSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({
                 "guests": "Guest count exceeds listing capacity"
             })
+        
 
         return attrs
     
