@@ -1,7 +1,27 @@
 services:
+  rent-api:
+    image: rent-docker:latest
+    build: server/
+    container_name: rent-api
+    environment:
+      - SECRET_KEY=django-insecure-ff8eolk5$+4#gz+%9$f*^_h$2-ni5jw2x!k5+wz03=fv&@fw7k
+      - DEBUG=False
+      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
+      - CSRF_TRUSTED_ORIGINS=http://localhost:8000,http://127.0.0.1:8000,http://0.0.0.0:8000
+      - DATABASE_NAME=rent
+      - DATABASE_USER=user
+      - DATABASE_PASSWORD=password
+      - HOST=database
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+      - /data:/app/staticfiles
   db:
     image: postgres:16.2-alpine
     restart: always
+    container_name: database
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
