@@ -16,17 +16,17 @@ class CreateListingSerializer(serializers.ModelSerializer):
         description = attrs.get('description')
         city = attrs.get('city')
 
-        if not len(title) >= 2:
+        if len(title) < 2:
             raise ValidationError({
                 'title': 'Title must contain at least 2 characters' 
             })
         
-        if not len(description) >= 2:
+        if len(description) < 2:
             raise ValidationError({
                 'description': 'Description must contain at least 2 characters' 
             })
 
-        if not len(city) >= 2:
+        if len(city) < 2:
             raise ValidationError({
                 'city': 'city must contain at least 2 characters' 
             })
